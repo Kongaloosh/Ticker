@@ -1,5 +1,11 @@
 /*
+ *  HEADER NOTE FOR MAT:
  * 
+ * This is the project thus far, I haven't had much time to code, but I've done
+ * a lot of reading and made a skeleton that just needs to be filled out.
+ * 
+ * I think that it would be best to make the agent and the critic first, then 
+ * working on the environment. 
  */
 package dopamine.emulation.project;
 

@@ -1,12 +1,19 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * HEADER NOTE FOR MAT:
+ * 
+ * This is just a skeleton right now, I'm just working on implementing the formulas
+ * I have many of them down, but there's a few more and the statespace needs to be
+ * figured out.
+ * 
  */
 package dopamine.emulation.project;
 
-/**
- *
- * @author Alexandr
+/*
+ * Notes:
+ * 
+ * 5/1/13:
+ * 
+ * --
  */
 public class Actor {
 /*
@@ -14,8 +21,7 @@ public class Actor {
  *  Move to left button and move to right button
  *         -- is stay a possibility, given this is over
  *          a period of time?
- * 
- * effectove 
+ *  
  */
 double [] stateSpace;
 
@@ -99,10 +105,15 @@ public void run (
             chooseNewAction();
     }
     
-    public void chooseNewAction(){
-        // just a stub for future implemenation
+    public void getSigma () {
+        // needs a random generator. just math.random?
     }
     
-   
-    
+    public void actorWeights(double reinforcementSignal){
+        
+    }
+
+    public void chooseNewAction(){
+        
+    }
 }

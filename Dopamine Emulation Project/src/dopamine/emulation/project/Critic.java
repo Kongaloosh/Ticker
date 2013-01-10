@@ -1,4 +1,8 @@
 /*
+ * HEADER NOTE FOR MAT:
+ * 
+ * I haven't worked on this recently
+ * 
  * critic to-do:
  * 
  *  - How are constants derived?
