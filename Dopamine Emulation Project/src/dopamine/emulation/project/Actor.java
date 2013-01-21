@@ -114,6 +114,7 @@ public void run (
     }
 
     public void chooseNewAction(){
-        
+        // stub, need to figure out what the dot notation is for.
+        // I believe there was a mention of it somewhere
     }
 }
