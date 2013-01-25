@@ -5,24 +5,21 @@
  * I have many of them down, but there's a few more and the statespace needs to be
  * figured out.
  * 
+ * -- I'm going to focus on the action section, if you want to take a look at 
+ * some of the other formulae in the actor section, that would be a good idea.
  */
 package dopamine.emulation.project;
 
 /*
- * Notes:
+ * Notes (ALEX):
+ * 24/1/13:
+ * I'm just laying the foundations looking over the actions
  * 
- * 5/1/13:
- * 
- * --
+ * 25/1/13:
+ * I'm checking out action prime, I built setEStimulus()
  */
 public class Actor {
-/*
- *  Two actions possible, or more?
- *  Move to left button and move to right button
- *         -- is stay a possibility, given this is over
- *          a period of time?
- *  
- */
+    
 double [] stateSpace;
 
 double learningRateAquisition = 0.1;
@@ -53,6 +50,9 @@ public Actor (int x){
 /* Explanation: stimulus tracs
  *  for this I used a small array to keep the numer of variables contained, as
  *  the definition for e refrences two timesteps prior to the current
+ *  
+ * For instance, e(0) = current timestep.
+ * After this, each incrementation is a step earlier.
  */
 }
   
@@ -64,7 +64,7 @@ public void run (
     }
     // These are all the Es from two time-steps ago
     public void calculateAllEBar(double e1, double e2, double e3, double e4 ){
-        
+        // Alex
         // e(t) = h (el(t-2)+ delta * el(t-1))        
         ebar1[0] = h(e1) + (stimulusDecay * ebar1[1]); 
         ebar1 [1] = ebar1 [0];
@@ -81,6 +81,7 @@ public void run (
      
     }
     public double h(double x){
+        // Alex
         // for use in the update of ebar
         if (x < 1) {
             return x;
@@ -89,7 +90,8 @@ public void run (
     }
     
      public double g(){
-        if (
+         // Alex
+         if (
                 e1[0]- e1[1]> 0 ||
                 e2[0]- e2[1]> 0 ||
                 e3[0]- e3[1]> 0 ||
@@ -101,8 +103,10 @@ public void run (
     }
      
     public void decideAction (){
-        if (System.currentTimeMillis()-lastActionTime >= 300)
-            chooseNewAction();
+        
+        if (System.currentTimeMillis()-lastActionTime >= 300){
+            findAPrime();
+        }
     }
     
     public void getSigma () {
@@ -112,9 +116,34 @@ public void run (
     public void actorWeights(double reinforcementSignal){
         
     }
+    
+    public void setEStimulus (int e1Prime, int e2Prime, int e3Prime, int e4Prime){
+        // Alex
+        // a measure of physical salience; if there is feeling 1, otherwise 0.
+        
+        e1[2]= e1[1];
+        e1[1]= e1[0];
+        e1[0] = e1Prime;
+    
+        e2[2]= e2[1];
+        e2[1]= e2[0];
+        e2[0] = e2Prime;
+        
+        e3[2]= e3[1];
+        e3[1]= e3[0];
+        e3[0] = e3Prime;
+        
+        e4[2]= e4[1];
+        e4[1]= e4[0];
+        e4[0] = e4Prime;
+    }
 
-    public void chooseNewAction(){
+    public void findAPrime(double[] vnl, double[] sigmaN ){
         // stub, need to figure out what the dot notation is for.
         // I believe there was a mention of it somewhere
+        for (int i = 0; i < 10; i++) {
+            
+        }
+    
     }
 }
