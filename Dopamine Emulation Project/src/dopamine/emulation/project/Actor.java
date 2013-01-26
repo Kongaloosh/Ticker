@@ -134,11 +134,18 @@ public void run (
     
     public void updateV1l(double reinforcementSignal){
         // Alex
-        // these are the 
         v11 += (findEta(reinforcementSignal))*ebar1[0];
+        v12 += (findEta(reinforcementSignal))*ebar2[0];
+        v13 += (findEta(reinforcementSignal))*ebar3[0];
+        v14 += (findEta(reinforcementSignal))*ebar4[0];    
+    }
+    
+    public void updateVl (double reinforcementSignal){
+       // Alex
         v21 += (findEta(reinforcementSignal))*ebar1[0];
-        
-        
+        v22 += (findEta(reinforcementSignal))*ebar2[0];
+        v23 += (findEta(reinforcementSignal))*ebar3[0];
+        v24 += (findEta(reinforcementSignal))*ebar4[0];    
     }
     
     public double findEta (double signal){
