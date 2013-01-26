@@ -61,6 +61,12 @@ double v22;
 double v23;
 double v24;
 
+double aPrime1;
+double aPrime2;
+double [] action = double [2];
+
+double[] aBar1 = new double[1];
+double[] aBar2 = new double[1];
 
 public Actor (int x){
     stateSpace = new double[x];
@@ -124,12 +130,13 @@ public void run (
     public void decideAction (){
         
         if (System.currentTimeMillis()-lastActionTime >= 300){
-            findAPrime();
+           
         }
     }
     
-    public void getSigma () {
+    public double getSigma () {
         // needs a random generator. just math.random?
+        return 1;
     }
     
     public void updateV1l(double reinforcementSignal){
@@ -163,32 +170,40 @@ public void run (
         }
     }
     
-    public void setEStimulus (int e1Prime, int e2Prime, int e3Prime, int e4Prime){
+    public void setaPrime1 () {
         // Alex
-        // a measure of physical salience; if there is feeling 1, otherwise 0.
-        
-        e1[2]= e1[1];
-        e1[1]= e1[0];
-        e1[0] = e1Prime;
-    
-        e2[2]= e2[1];
-        e2[1]= e2[0];
-        e2[0] = e2Prime;
-        
-        e3[2]= e3[1];
-        e3[1]= e3[0];
-        e3[0] = e3Prime;
-        
-        e4[2]= e4[1];
-        e4[1]= e4[0];
-        e4[0] = e4Prime;
+        // This can be simplified later if we want to with some arrays.
+        aPrime1 = 
+                (((v11*ebar1[0])-getSigma())+
+                ((v12*ebar2[0])-getSigma())+
+                ((v13*ebar3[0])-getSigma())+
+                ((v14*ebar4[0])-getSigma()))*g();    
     }
-
-    public void findAPrime(double[] vnl, double[] sigmaN ){
-        // stub, need to figure out what the dot notation is for.
-        // I believe there was a mention of it somewhere
-        for (int i = 0; i < 10; i++) {
-            
+    
+    public void setAPrime2 () {
+        aPrime2 =
+                (((v21*ebar1[0])-getSigma())+
+                ((v22*ebar2[0])-getSigma())+
+                ((v23*ebar3[0])-getSigma())+
+                ((v24*ebar4[0])-getSigma()))*g();  
+    }
+    
+    public void findAPrime (){
+        setaPrime1();
+        setAPrime2();
+        action [2] = action [1];
+        action [1] = action [0];
+        
+        
+        if (aPrime1 > 0 && aPrime1 > aPrime2) {
+            action[0] = 1;
+        }else{
+            action[0] = 0;
         }
+    }
+    
+    public void updateABar(){
+        aBar1[0] = h(action[0]+(stimulusDecay*aBar1[1]));
+        aBar2[0] = h(action[0]+(stimulusDecay*aBar2[1]));
     }
 }
