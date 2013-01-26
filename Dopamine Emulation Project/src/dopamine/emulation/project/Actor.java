@@ -136,6 +136,9 @@ public void run (
         // Alex
         // these are the 
         v11 += (findEta(reinforcementSignal))*ebar1[0];
+        v21 += (findEta(reinforcementSignal))*ebar1[0];
+        
+        
     }
     
     public double findEta (double signal){
