@@ -17,6 +17,13 @@ package dopamine.emulation.project;
  * 
  * 25/1/13:
  * I'm checking out action prime, I built setEStimulus()
+ * 
+ * 26/1/13:
+ * 
+ * Things Alex Tends To Forget:
+ * 
+ * -- if there is an 'l' in the subscript, they're talking about stimulus
+ * -- if there's an 'n' in the subscript, they're likely talking about actions
  */
 public class Actor {
     
@@ -28,6 +35,7 @@ double learningRateExtinction = 0.7;
 double discountRate = 0.9;
 
 double randomDistributionMaximum = 0.5;
+double baselineOfEffectiveReinforcement =0.5;
 
 double stimulusDecay = 0.96;
 double actionDecay  = stimulusDecay;
@@ -42,6 +50,16 @@ double [] e1 = new double [2];
 double [] e2 = new double [2];
 double [] e3 = new double [2];
 double [] e4 = new double [2];
+
+double v11;
+double v12;
+double v13;
+double v14;
+
+double v21;
+double v22;
+double v23;
+double v24;
 
 
 public Actor (int x){
@@ -80,6 +98,7 @@ public void run (
         
      
     }
+    
     public double h(double x){
         // Alex
         // for use in the update of ebar
@@ -113,8 +132,25 @@ public void run (
         // needs a random generator. just math.random?
     }
     
-    public void actorWeights(double reinforcementSignal){
+    public void updateV1l(double reinforcementSignal){
+        // Alex
+        // these are the 
+        v11 += (findEta(reinforcementSignal))*ebar1[0];
+    }
+    
+    public double findEta (double signal){
+        //  Alex
+        //  This is the definition of eta which is used for extinction.
         
+        if (signal - baselineOfEffectiveReinforcement > 0) {
+            // aquisition
+            return 0.08;
+        }else if (signal - baselineOfEffectiveReinforcement <= 0){
+            //extinction
+            return 0.002;
+        }else{
+            return 0;
+        }
     }
     
     public void setEStimulus (int e1Prime, int e2Prime, int e3Prime, int e4Prime){
@@ -144,6 +180,5 @@ public void run (
         for (int i = 0; i < 10; i++) {
             
         }
-    
     }
 }
