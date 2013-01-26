@@ -52,12 +52,17 @@ public class Critic {
      */
     
     public Critic (){
+        // Alex
+        // Just defining constants
+        
         e = new double [4];
         x = new double [e.length*3];
         eBar = 0;
     }
     
     public void updateE (int left, int centre, int right, int tounge) {
+        //Alex
+        
         if (!(left <= 1 && right <=1 && centre <= 1 && tounge <= 1)){
             try {
                 throw new Exception("Input to updateE incorrect");

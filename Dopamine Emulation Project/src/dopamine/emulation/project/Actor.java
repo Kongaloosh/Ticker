@@ -1,12 +1,5 @@
 /*
- * HEADER NOTE FOR MAT:
  * 
- * This is just a skeleton right now, I'm just working on implementing the formulas
- * I have many of them down, but there's a few more and the statespace needs to be
- * figured out.
- * 
- * -- I'm going to focus on the action section, if you want to take a look at 
- * some of the other formulae in the actor section, that would be a good idea.
  */
 package dopamine.emulation.project;
 
@@ -19,6 +12,8 @@ package dopamine.emulation.project;
  * I'm checking out action prime, I built setEStimulus()
  * 
  * 26/1/13:
+ * I just finished things up. All the formulae are set, we just need to clean
+ * things up.
  * 
  * Things Alex Tends To Forget:
  * 
