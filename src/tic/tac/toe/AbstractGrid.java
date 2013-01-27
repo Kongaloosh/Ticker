@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  *
  */
-public class AbstractGrid extends Object implements Grid<Object> {
+public class AbstractGrid <E extends Object> implements Grid<E> {
     
     public AbstractGrid () {
         
@@ -35,20 +35,12 @@ public class AbstractGrid extends Object implements Grid<Object> {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
-    public Object remove(Location lctn) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 
     @Override
     public ArrayList<Location> getEmptyAdjacentLocations(Location lctn) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
-    public ArrayList<Object> getNeighbors(Location lctn) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 
     @Override
     public ArrayList<Location> getOccupiedAdjacentLocations(Location lctn) {
@@ -69,13 +61,23 @@ public class AbstractGrid extends Object implements Grid<Object> {
     protected Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
-    
-    
-    
+
     @Override
-    public Object get(Location lctn) {
+    public E get(Location lctn) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public ArrayList<E> getNeighbors(Location lctn) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public E remove(Location lctn) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    
     
     
     
