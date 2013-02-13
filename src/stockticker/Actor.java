@@ -35,7 +35,7 @@ import org.jfree.chart.ChartPanel;
  * specialized 
  */
 public class Actor {
-
+//  Stock related fields:
     private double buyInPrice = 0;
     private double sellPrice = 0;
     private boolean isHolding = false;
@@ -50,7 +50,7 @@ public class Actor {
     private int indexOfState;
     private int indexOfBestMove;
     private double reward;
-    //Agent Variables:
+//  Agent Variables:
     private double temporalDifference;
     public static final double learningRate = 0.1;
     public static final double discountRate = 0.99;
