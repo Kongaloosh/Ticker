@@ -58,7 +58,7 @@ double v24;
 
 double aPrime1;
 double aPrime2;
-double [] action = double [2];
+double [] action = new double [2];
 
 double[] aBar1 = new double[1];
 double[] aBar2 = new double[1];
