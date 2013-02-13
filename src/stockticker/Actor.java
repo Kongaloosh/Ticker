@@ -32,7 +32,11 @@ import org.jfree.chart.ChartPanel;
  * 
  * 13/2/13
  * - The GUI has really, really, really gotten a lot more developed now. I have a
- * specialized 
+ * specialized class for this
+ * - It would probably be a not bad idea to go ahead and make something that would
+ * generate a .txt file for the statespace if there wasn't one already
+ * - It would also be a good idea to look into using other kinds of files to make
+ * the retreival a bit faster.
  */
 public class Actor {
 //  Stock related fields:
@@ -71,14 +75,8 @@ public class Actor {
 
     public Actor(String quote) {
         name = quote;
-        
-        // create real-time lable
-        
-        // createStatespace
+//        Reads the pre-existing Statespace
         readSpace();
-
-        // create graph
-     
         rewardGraph = new Grapher("Reward", "Reward", "Time-steps", "Reward");
         actorProfit = new Grapher("Actor Profit", "Actor Profit", "Time Steps", "Actor Profit");
         priceGraph = new Grapher("Price", "Price", "Time Steps", "Price");
