@@ -12,6 +12,11 @@ import org.apache.commons.logging.LogFactory;
  * Used as guidance for getting information from .csv:
  *  http://greatwebguy.com/programming/java/stock-quote-and-chart-from-yahoo-in-java/
  * 
+ * Alex's Notes:
+ * 
+ * 13/2/13
+ * - I cleand up and modified the class a bit; the bug that caused delays is gone
+ * 
  */
 public class StockTickerDAO {
     private static final Log log = LogFactory.getLog(StockTickerDAO.class);

@@ -1,5 +1,6 @@
 /*
  * Developer: Alexandra Kearney (Kearney@Ualberta.ca)
+ *  Last edited: 13/2/13 By Alex Kearney
  */
 package stockticker;
 
@@ -29,7 +30,9 @@ import org.jfree.chart.ChartPanel;
  * - Added a write and read for the statespace; there is now a rolling memory of
  * the stocks.
  * 
- * 
+ * 13/2/13
+ * - The GUI has really, really, really gotten a lot more developed now. I have a
+ * specialized 
  */
 public class Actor {
 

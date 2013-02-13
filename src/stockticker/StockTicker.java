@@ -1,6 +1,6 @@
 /*
  *Developer: Alexandra Kearney (Kearney@Ualberta.ca)
- *
+ *Last Edited: 13/2/13 By Alex Kearney
  */
 package stockticker;
 

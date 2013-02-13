@@ -1,15 +1,26 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Author: Alex Kearney (Konga.kearney@gmail.com)
  */
 package stockticker;
 
 import javax.swing.JLabel;
 import org.jfree.chart.ChartPanel;
 
-/**
+/*Created: 13/2/12 by Alex Kearney
+ *  
+ * 13/2/12
+ * - This is still in a crappy spaghetti phase; I had to smash a few things up
+ * due to not really knowing what I was doing with the gui. Sorry guys, I like
+ * robots.
+ * 
+ * - there's a new refresh to prevent the mitosis bug, everything's graphing well
+ * it should be easy to refactor for more graphs if need be
+ * 
+ * - this belongs to the actor, with every instance of the actor, another one of
+ * these will be made with all the bells an whistles included. If we want to 
+ * expand to keep this form, we can make a higher level panel for managing
+ * multiple stocks, which would likely work well with broker functionality.
  *
- * @author Alexandr
  */
 public class TickerGuiFrame extends javax.swing.JFrame {
 
@@ -114,7 +125,10 @@ public class TickerGuiFrame extends javax.swing.JFrame {
           ChartPanel priceGraph,
           ChartPanel rewardGraph,
           JLabel StockData){
-//      This refreshes the gui of the panes for a stock
+/*          Created by Alex 13/2/13
+ *  This is just a re-fresh, updating all the values in the frame with new
+ * graph data .ect.
+ */
         agentDataTab.setComponentAt(0, agentDataLabel);
         agentDataLabel.setText(actorData.getText());
         agentDataTab.setComponentAt(1, quoteLabel);
@@ -131,7 +145,10 @@ public class TickerGuiFrame extends javax.swing.JFrame {
           ChartPanel priceGraph,
           ChartPanel rewardGraph,
           JLabel StockData){
-//         This initializes the look of the panes for a stock
+/*          Created by Alex 13/2/13
+ *  This initializes the values of the frame and is called by the Actor to which
+ * the instance of the frame belongs to.
+ */
          agentDataLabel.setText(actorData.getText());
          agentDataLabel.repaint();
 

@@ -1,6 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Created By Alex Kearney (konga.kearney@gmail.com)
+ * On: 13/2/13
+ * Last Edited: 12/2/13 By Alex Kearney 
  */
 package stockticker;
 
