@@ -77,18 +77,21 @@ public class Actor {
         name = quote;
 //        Reads the pre-existing Statespace
         readSpace();
+//       Sets the graphs that track agent behaviour
         rewardGraph = new Grapher("Reward", "Reward", "Time-steps", "Reward");
         actorProfit = new Grapher("Actor Profit", "Actor Profit", "Time Steps", "Actor Profit");
         priceGraph = new Grapher("Price", "Price", "Time Steps", "Price");
-        
-        
+//        Creates the gui to monitor data
         gui.setStartGui(new JLabel(""), actorProfit.get(), priceGraph.get(), rewardGraph.get(), new JLabel(""));
         gui.setVisible(true);
-        
     }
     
     public void guiManager(){
-        
+/* Created by: Alex Kearney 13/2/13
+ *  This creates the data to pass into the Gui class on a step by step basis
+ * - this could be improved as there is spaghetti left over from jerry-rigging
+ * the panels into the GUI
+ */        
         JLabel actorData = new JLabel(
                 "<html>Quoting: " + name
                 + "<br>Profit: " + getProfit()
@@ -113,8 +116,9 @@ public class Actor {
     }
     
     public void act(double price, double change) {
-        
-            
+        /* Created by: Alexandra Kearney
+         * This is the method that will move the agent
+         */
         if (previousPrice != price && change !=  previousChange) {
         
         setPrice(price);
