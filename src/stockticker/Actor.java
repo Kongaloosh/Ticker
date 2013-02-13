@@ -317,6 +317,9 @@ public class Actor {
     }
 
     public void updateTD() {
+        /* Created By: Alex Kearney 
+         * 
+         */
         determineReward();
         setTemporalDifference(
                 learningRate
@@ -328,6 +331,9 @@ public class Actor {
     }
 
     public void updateStateVariables() {
+        /* Created By: Alex Kearney 
+         * 
+         */
         setIndexOfPreviousBestMove(getIndexOfBestMove());
         setPreviousPrice(getPrice());
         setPreviousChange(getChange());
