@@ -148,9 +148,6 @@ public class Actor {
                 + "\n index value" + stateSpace[getIndexOfBestMove()]
                 + "\n reward: " + getReward()
                 + "\n isHolding" + isIsHolding() + "\n");
-//        System.out.println("is Holding" + isHolding
-//                + "\n action" + action
-//                + "\n..............................");
     }
 
     public void writeStateSpace() {
