@@ -30,7 +30,10 @@ import javax.swing.JLabel;
  * 
  * 13/02/13
  *  - For some reason data wasn't being fetched well, but the bugs appear to be fixed
- */
+ *  - We really need to make a front end to deal with multiple stocks, like a
+ *  JFrame to deal with the messy particulars of working with the Nikkei or FTSE
+ *  That way we can run this all day long.
+ */ 
 public class StockTicker {
 
     /*
