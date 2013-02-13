@@ -137,6 +137,11 @@ public class Actor {
     }
 
     public void write() {
+    /* Created By: Alex Kearney
+     * This is a bit of redundant code from the pre-gui phase, but it's still 
+     * helpful for debug.
+     */    
+        
         System.out.println(
                 " ***************" + timesteps
                 + " Action :  " + getAction()
@@ -151,7 +156,9 @@ public class Actor {
     }
 
     public void writeStateSpace() {
-        // will write out the statespace as a string with a new line for all doubles
+        /* Created By: Alex Kearney 
+         * This writes the statespace to a file for long-term use
+         */
         try {
 
             fileWriter = new FileWriter("Statespace" + name + ".txt");
@@ -172,6 +179,9 @@ public class Actor {
     }
     
     public void holdPane(int hour){
+        /* Created By: Alex Kearney 
+         * This holds the stock during after-hours trading so no actions occur.
+         */
         JLabel holdLable = new JLabel(
                   "<html> Exchange is closed"
                 + "<br> Opening time: 9:30" 
@@ -181,6 +191,9 @@ public class Actor {
     }
     
     public void Graph() {
+        /* Created By: Alex Kearney 13/2/13
+         * Updated the graphs with most recent information
+         */
         rewardGraph.update(timesteps, getReward());
         actorProfit.update(timesteps, getProfit());
         priceGraph.update(timesteps, getPrice());
@@ -188,7 +201,9 @@ public class Actor {
     }
 
     public void readSpace() {
-//        reads all of the values in the file for statespace
+        /* Created By: Alex Kearney 
+         * Reads statespace from previous execution
+         */
         try {
             bufferedReader = new BufferedReader(
                     new FileReader("Statespace" + name + ".txt"));
@@ -205,6 +220,9 @@ public class Actor {
     }
 
     public void updateStateIndex() {
+        /* Created By: Alex Kearney 
+         * Determines the value for the current state
+         */
         int indexPrice;
         int indexChange;
 
@@ -224,10 +242,8 @@ public class Actor {
     }
 
     public void updateAction() {
-        /* 
-         * 0 = Buy
-         * 1 = Sell
-         * 2 = Hold
+        /* Created By: Alex Kearney 
+         * Determines the actor's next action
          */
         double globalMax = 0;
         int globalMaxIndex = 0;
@@ -268,6 +284,9 @@ public class Actor {
     }
 
     public void updateHoldings() {
+        /* Created By: Alex Kearney 
+         * Updates the isHolding based on actions
+         */
         if (getAction() == 0) {
             profit -= getPrice();
             setBuyInPrice(getPrice());
@@ -281,7 +300,9 @@ public class Actor {
     }
 
     public void determineReward() {
-        
+        /* Created By: Alex Kearney 
+         * Determines the reward given the action
+         */
         if (getAction() == 0) {
             setReward(-1.0 / (getPreviousPrice() / getPrice()));
         } else if (getAction() == 1) {
