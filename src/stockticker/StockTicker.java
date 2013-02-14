@@ -52,11 +52,13 @@ public class StockTicker {
 //        NIKKEI actor
         StockBean stockNIKKEI = StockTickerDAO.getInstance().getStockPrice("^N225");
         Actor actorNIKKEI = new Actor("^N225");
+        actorNIKKEI.setChange(stockGOOG.getChange());
+        actorNIKKEI.setPrice(stockNIKKEI.getPrice());
+//        FTSE actor
+        StockBean stockFTSE = StockTickerDAO.getInstance().getStockPrice("^FTSE");
+        Actor actorFTSE = new Actor("^FTSE");
         
         long time = System.currentTimeMillis();
-        
-        
-
 
 //      Timing for NYSE
         TimeZone est = TimeZone.getTimeZone("EST");
