@@ -57,6 +57,7 @@ public class Actor {
     private int indexOfState;
     private int indexOfBestMove;
     private double reward;
+    private double equity;
 //  Agent Variables:
     private double temporalDifference;
     public static final double learningRate = 0.1;
@@ -73,7 +74,7 @@ public class Actor {
     BufferedWriter bufferedWriter;
     // Graphing object
     Grapher rewardGraph;
-    Grapher actorProfit;
+    Grapher equityGraph;
     Grapher priceGraph;
 
     public Actor(String quote) {
@@ -82,10 +83,10 @@ public class Actor {
         readSpace();
 //       Sets the graphs that track agent behaviour
         rewardGraph = new Grapher("Reward", "Reward", "Time-steps", "Reward");
-        actorProfit = new Grapher("Actor Profit", "Actor Profit", "Time Steps", "Actor Profit");
+        equityGraph = new Grapher("Actor Equity", "Equity", "Time Steps", "Actor Equity");
         priceGraph = new Grapher("Price", "Price", "Time Steps", "Price");
 //        Creates the gui to monitor data
-        gui.setStartGui(new JLabel(""), actorProfit.get(), priceGraph.get(), rewardGraph.get(), new JLabel(""));
+        gui.setStartGui(new JLabel(""), equityGraph.get(), priceGraph.get(), rewardGraph.get(), new JLabel(""));
         gui.setVisible(true);
     }
     
@@ -114,7 +115,7 @@ public class Actor {
                 + "<br>Time step: " + timesteps
                 + "</html>");
         
-        gui.refresh(actorData, priceGraph.get(), actorProfit.get(), rewardGraph.get(), stockData);
+        gui.refresh(actorData, equityGraph.get(), priceGraph.get(), rewardGraph.get(), stockData);
         gui.repaint();
     }
     
@@ -186,11 +187,12 @@ public class Actor {
          * This holds the stock during after-hours trading so no actions occur.
          */
         JLabel holdLable = new JLabel(
-                  "<html> Exchange is closed"
+                  "<html>" + name
+                + "<br> Exchange is closed"
                 + "<br> Opening time: " + openingTime 
                 + "<br> Current time EST: " + hour
                 + "</html>");
-        gui.refresh(holdLable, priceGraph.get(), actorProfit.get(), rewardGraph.get(), holdLable);
+        gui.refresh(holdLable, priceGraph.get(), equityGraph.get(), rewardGraph.get(), holdLable);
     }
     
     public void Graph() {
@@ -198,7 +200,7 @@ public class Actor {
          * Updated the graphs with most recent information
          */
         rewardGraph.update(timesteps, getReward());
-        actorProfit.update(timesteps, getProfit());
+        equityGraph.update(timesteps, equity);
         priceGraph.update(timesteps, getPrice());
         
     }
@@ -229,11 +231,7 @@ public class Actor {
         int indexPrice;
         int indexChange;
 
-        if (price / previousPrice >= 2) {
-            indexPrice = 20;
-        } else {
-            indexPrice = (int) Math.round((price / previousPrice) * 10);
-        }
+        
 
         if (change / previousChange >= 2) {
             indexChange = 20;
@@ -241,7 +239,7 @@ public class Actor {
             indexChange = (int) Math.round((change / previousChange) * 10);
         }
 
-        setIndexOfState(indexChange + (21 * indexPrice));
+        setIndexOfState(discritize(price / previousPrice) + (21 * discritize((change / previousChange))));
     }
 
     public void updateAction() {
@@ -297,6 +295,7 @@ public class Actor {
 
         } else if (action == 1) {
             profit += getPrice();
+            equity += (getBuyInPrice() - getPrice());
             setBuyInPrice(0);
             setIsHolding(false);
         }
@@ -465,42 +464,64 @@ public class Actor {
     }
 
     private int discritize(double value) {
-        if (value < -0.1) {
+        if (value < 0.85) {
             return 0;
-        } else if (value >= -0.09 && value < -0.08) {
+        } else if (value >= 0.85 && value < 0.9) {
             return 1;
-        } else if (value >= -0.08 && value < -0.7) {
+        } else if (value >= 0.91 && value < 0.92) {
             return 2;
-        } else if (value >= -0.07 && value < -0.6) {
+        } else if (value >= 0.92 && value < 0.93) {
             return 3;
-        } else if (value >= -0.06 && value < -0.5) {
+        } else if (value >= 0.93 && value < 0.94) {
             return 4;
-        } else if (value >= -0.04 && value < -0.3) {
+        } else if (value >= 0.94 && value < 0.95) {
             return 5;
-        } else if (value >= -0.02 && value < -0.1) {
+        } else if (value >= 0.95 && value < 0.96) {
             return 6;
-        } else if (value >= -0.01 && value < -0.0) {
+        } else if (value >= 0.96 && value < 0.97) {
             return 7;
-        } else if (value >= 0 && value < 0.1) {
+        } else if (value >= 0.97 && value < 0.98) {
             return 8;
-        } else if (value >= 0.1 && value < 0.2) {
+        } else if (value >= 0.98 && value < 0.99) {
             return 9;
-        } else if (value >= 0.2 && value < 0.3) {
+        } else if (value >= 0.99 && value < 1) {
             return 10;
-        } else if (value >= 0.3 && value < 0.4) {
+        } else if (value >= 1 && value < 1.01) {
             return 11;
-        } else if (value >= 0.4 && value < 0.5) {
+        } else if (value >= 1.01 && value < 1.02) {
             return 12;
-        } else if (value >= 0.5 && value < 0.6) {
+        } else if (value >= 1.02 && value < 1.03) {
             return 13;
-        } else if (value >= 0.6 && value < 0.7) {
+        } else if (value >= 1.03 && value < 1.04) {
             return 14;
-        } else if (value >= 0.7 && value < 0.8) {
+        } else if (value >= 1.04 && value < 1.05) {
             return 15;
-        } else if (value >= 0.8 && value < 0.9) {
+        } else if (value >= 1.05 && value < 1.06) {
             return 16;
-        } else {
+        } else if (value >= 1.06 && value < 1.07) {
             return 17;
+        } else if (value >= 1.07 && value < 1.08) {
+            return 18;
+        } else if (value >= 1.08 && value < 1.09) {
+            return 19;
+        } else if (value >= 1.10 && value < 1.15) {
+            return 20;
+        } else {
+            return 21;
         }
+    }
+
+    /**
+     * @return the equity
+     */
+    public double getEquity() {
+        return equity;
+    }
+
+    /**
+     * @param equity the equity to set
+     */
+    public void setEquity(double equity) {
+        this.equity = equity;
     }
 }
