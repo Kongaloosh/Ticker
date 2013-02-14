@@ -36,35 +36,47 @@ import javax.swing.JLabel;
  */ 
 public class StockTicker {
 
-    /*
-     * 
+    /* To-do: 
+     *  - Add nikkei and FTSE as their own exchange times
      */
     public static void main(String[] args) {
         double THIRTY_MIN = 180000;
         double FIFTEEN_MIN = 900000;
         double ONE_MIN = 60000;
-        StockBean stock = StockTickerDAO.getInstance().getStockPrice("GOOG");
-        Actor actor = new Actor("GOOG");
-        actor.setPrice(stock.getPrice());
-        actor.setChange(stock.getChange());
+        
+//        GOOG actor
+        StockBean stockGOOG = StockTickerDAO.getInstance().getStockPrice("GOOG");
+        Actor actorGOOG = new Actor("GOOG");
+        actorGOOG.setPrice(stockGOOG.getPrice());
+        actorGOOG.setChange(stockGOOG.getChange());
+//        NIKKEI actor
+        StockBean stockNIKKEI = StockTickerDAO.getInstance().getStockPrice("^N225");
+        Actor actorNIKKEI = new Actor("^N225");
+        
         long time = System.currentTimeMillis();
+        
+        
 
 
-
+//      Timing for NYSE
         TimeZone est = TimeZone.getTimeZone("EST");
-        Calendar calendar = Calendar.getInstance(est);
-
+        Calendar calendarEST = Calendar.getInstance(est);
+//      Timing for NIKKEI
+        TimeZone jst = TimeZone.getTimeZone("JST");
+        Calendar calendarJST = Calendar.getInstance(jst);
+//      Timing got FTSE
+        
         while (true) {
-            if ((calendar.get(Calendar.HOUR_OF_DAY) == 9 && calendar.get(Calendar.MINUTE) >= 30)
-                    || (calendar.get(Calendar.HOUR_OF_DAY) >= 10 && calendar.get(Calendar.HOUR_OF_DAY) < 16)) {
+            if ((calendarEST.get(Calendar.HOUR_OF_DAY) == 9 && calendarEST.get(Calendar.MINUTE) >= 30)
+                    || (calendarEST.get(Calendar.HOUR_OF_DAY) >= 10 && calendarEST.get(Calendar.HOUR_OF_DAY) < 16)) {
 //                 if the hours are between 9:30 AM and 4:00 pm, trade.
 
-                stock = StockTickerDAO.getInstance().getStockPrice("GOOG");
-                actor.act(stock.getPrice(), stock.getChange());
+                stockGOOG = StockTickerDAO.getInstance().getStockPrice("GOOG");
+                actorGOOG.act(stockGOOG.getPrice(), stockGOOG.getChange());
                 time = System.currentTimeMillis();
 
             } else {
-                actor.holdPane(calendar.get(Calendar.HOUR_OF_DAY));
+                actorGOOG.holdPane(calendarEST.get(Calendar.HOUR_OF_DAY));
             }
 
 
