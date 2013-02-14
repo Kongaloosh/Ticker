@@ -83,7 +83,7 @@ public class Actor {
         readSpace();
 //       Sets the graphs that track agent behaviour
         rewardGraph = new Grapher("Reward", "Reward", "Time-steps", "Reward");
-        equityGraph = new Grapher("Actor Equity", "Equity", "Time Steps", "Actor Equity");
+        equityGraph = new Grapher("Actor Profit", "Actor Profit", "Time Steps", "Actor Profit");
         priceGraph = new Grapher("Price", "Price", "Time Steps", "Price");
 //        Creates the gui to monitor data
         gui.setStartGui(new JLabel(""), equityGraph.get(), priceGraph.get(), rewardGraph.get(), new JLabel(""));
@@ -250,24 +250,28 @@ public class Actor {
         int globalMaxIndex = 0;
         int tempAction = 0;
 
-        for (int i = 0; i < 3; i++) {
-
-            if ((i == 0 && !isHolding) || // if not holding and buy index
-                    (i == 1 && isHolding) || // if holding and sell index
-                    i == 2) {             // if hold
-//                System.out.println("i " + i + "is holding "+ isHolding );
-                // if the agent is holding stocks it can hold or sell
-                // if the agent is not holding stocks it can hold or buy
-
-                if (stateSpace[getIndexOfState() + (21 * 21 * i)] >= globalMax) {
-
-                    globalMax = stateSpace[getIndexOfState() + (21 * 21 * i)];
-                    globalMaxIndex = (getIndexOfState() + (21 * 21 * i));
-                    tempAction = i;
-                }
+        if (isHolding) {
+            if (stateSpace[getIndexOfState() + (21 * 21 * 1)] >= stateSpace[getIndexOfState() + (21 * 21 * 2)]) {
+//                then sell
+                tempAction = 1;
+            }else{
+//                then hold
+                tempAction = 2;
+            }
+        }else if (!isHolding){
+            if (stateSpace[getIndexOfState() + (21 * 21 * 0)] >= stateSpace[getIndexOfState() + (21 * 21 * 2)]) {
+//                then buy
+                tempAction = 0;
+            }else{
+//                then hold
+                tempAction = 2;
             }
         }
-
+        
+        if (isHolding && tempAction == 0) {
+            System.out.println("the machines are rising");
+        }
+        
         setIndexOfBestMove(globalMaxIndex);
         setAction(tempAction);
 
