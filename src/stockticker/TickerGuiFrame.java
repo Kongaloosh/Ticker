@@ -21,6 +21,8 @@ import org.jfree.chart.ChartPanel;
  * expand to keep this form, we can make a higher level panel for managing
  * multiple stocks, which would likely work well with broker functionality.
  *
+ * 14/02/13
+ * - found a bug: the pane behind will pop up when the exchange is closed
  */
 public class TickerGuiFrame extends javax.swing.JFrame {
 
@@ -46,6 +48,9 @@ public class TickerGuiFrame extends javax.swing.JFrame {
         agentDataLabel = new javax.swing.JLabel();
         quoteDataPanel = new javax.swing.JPanel();
         quoteLabel = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,6 +97,45 @@ public class TickerGuiFrame extends javax.swing.JFrame {
 
         agentDataTab.addTab("Quote Data", quoteDataPanel);
 
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 395, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 272, Short.MAX_VALUE)
+        );
+
+        agentDataTab.addTab("tab3", jPanel2);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 395, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 272, Short.MAX_VALUE)
+        );
+
+        agentDataTab.addTab("tab4", jPanel3);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 395, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 272, Short.MAX_VALUE)
+        );
+
+        agentDataTab.addTab("tab5", jPanel4);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -115,10 +159,14 @@ public class TickerGuiFrame extends javax.swing.JFrame {
     private javax.swing.JPanel agentDataPanel;
     private javax.swing.JTabbedPane agentDataTab;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel quoteDataPanel;
     private javax.swing.JLabel quoteLabel;
     // End of variables declaration//GEN-END:variables
 
+  
   public void refresh(
           JLabel actorData,
           ChartPanel actorProfitGraph,
@@ -133,9 +181,13 @@ public class TickerGuiFrame extends javax.swing.JFrame {
         agentDataLabel.setText(actorData.getText());
         agentDataTab.setComponentAt(1, quoteLabel);
         quoteLabel.setText(StockData.getText());
-        agentDataTab.setComponentAt(2, rewardGraph);
-        agentDataTab.setComponentAt(3, actorProfitGraph);
-        agentDataTab.setComponentAt(4, priceGraph);
+        agentDataTab.setComponentAt(2, jPanel2);
+        jPanel2 = rewardGraph;
+        agentDataTab.setComponentAt(3, jPanel3);
+        jPanel3 = actorProfitGraph;
+        agentDataTab.setComponentAt(4, jPanel4);
+        jPanel4 = priceGraph;
+                
         
   }
   
@@ -156,10 +208,12 @@ public class TickerGuiFrame extends javax.swing.JFrame {
          quoteLabel.repaint();
 
          
-         agentDataTab.add(rewardGraph);
-         agentDataTab.add(actorProfitGraph);
-         agentDataTab.add(priceGraph);
-         
+         agentDataTab.add(jPanel2);
+         agentDataTab.add(jPanel3);
+         agentDataTab.add(jPanel4);
+         jPanel2 = rewardGraph;
+         jPanel3 = actorProfitGraph;
+         jPanel4 = priceGraph;
          agentDataTab.setTitleAt(2, "Reward Graph");   
          agentDataTab.setTitleAt(3, "Actor Profit Graph"); 
          agentDataTab.setTitleAt(4, "Stock Price Graph");

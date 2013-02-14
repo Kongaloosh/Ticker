@@ -37,13 +37,16 @@ import org.jfree.chart.ChartPanel;
  * generate a .txt file for the statespace if there wasn't one already
  * - It would also be a good idea to look into using other kinds of files to make
  * the retreival a bit faster.
+ * 
+ * 14/02/13
+ * - pane bug in the price pane
  */
 public class Actor {
 //  Stock related fields:
     private double buyInPrice = 0;
     private double sellPrice = 0;
     private boolean isHolding = false;
-    private double price;
+    private double price = 0;
     private double change;
     private double previousPrice = 0;
     private double previousChange = 0;
@@ -187,7 +190,7 @@ public class Actor {
                 + "<br> Opening time: " + openingTime 
                 + "<br> Current time EST: " + hour
                 + "</html>");
-        gui.refresh(holdLable, new ChartPanel(null), new ChartPanel(null), new ChartPanel(null), new JLabel());
+        gui.refresh(holdLable, priceGraph.get(), actorProfit.get(), rewardGraph.get(), holdLable);
     }
     
     public void Graph() {

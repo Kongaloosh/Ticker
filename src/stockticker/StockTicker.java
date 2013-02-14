@@ -33,6 +33,11 @@ import javax.swing.JLabel;
  *  - We really need to make a front end to deal with multiple stocks, like a
  *  JFrame to deal with the messy particulars of working with the Nikkei or FTSE
  *  That way we can run this all day long.
+ * 
+ * 14/02/13
+ * - Extended the application to three timezones
+ * - partially fixed FTSE pane bug, still doesn't recognize it's down
+ * - pane index out of bounds bug in the while loop
  */ 
 public class StockTicker {
 
@@ -52,11 +57,13 @@ public class StockTicker {
 //        NIKKEI actor
         StockBean stockNIKKEI = StockTickerDAO.getInstance().getStockPrice("^N225");
         Actor actorNIKKEI = new Actor("^N225");
-        actorNIKKEI.setChange(stockGOOG.getChange());
+        actorNIKKEI.setChange(stockNIKKEI.getChange());
         actorNIKKEI.setPrice(stockNIKKEI.getPrice());
 //        FTSE actor
         StockBean stockFTSE = StockTickerDAO.getInstance().getStockPrice("^FTSE");
         Actor actorFTSE = new Actor("^FTSE");
+        actorFTSE.setPrice(stockFTSE.getPrice());
+        actorFTSE.setChange(stockFTSE.getChange());
         
         long time = System.currentTimeMillis();
 
@@ -94,12 +101,12 @@ public class StockTicker {
             }
 //           Case for FTSE
             if (
-                    (calendarJST.get(Calendar.HOUR_OF_DAY) == 8) ||
-                    (calendarJST.get(Calendar.HOUR_OF_DAY) >= 8 && calendarJST.get(Calendar.HOUR_OF_DAY) <= 12)) {
-                stockFTSE = StockTickerDAO.getInstance().getStockPrice("FTSE");
+                    (calendarGMT.get(Calendar.HOUR_OF_DAY) == 8) ||
+                    (calendarGMT.get(Calendar.HOUR_OF_DAY) >= 8 && calendarGMT.get(Calendar.HOUR_OF_DAY) <= 12)) {
+                stockFTSE = StockTickerDAO.getInstance().getStockPrice("^FTSE");
                 actorFTSE.act(stockFTSE.getPrice(), stockFTSE.getChange());
             }else{
-                actorNIKKEI.holdPane(calendarGMT.get(Calendar.HOUR_OF_DAY), "8:00");
+                actorFTSE.holdPane(calendarGMT.get(Calendar.HOUR_OF_DAY), "8:00");
             }
         }
     }
