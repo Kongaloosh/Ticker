@@ -181,12 +181,17 @@ public class TickerGuiFrame extends javax.swing.JFrame {
         agentDataLabel.setText(actorData.getText());
         agentDataTab.setComponentAt(1, quoteLabel);
         quoteLabel.setText(StockData.getText());
-        agentDataTab.setComponentAt(2, jPanel2);
+        
         jPanel2 = rewardGraph;
-        agentDataTab.setComponentAt(3, jPanel3);
+        agentDataTab.setComponentAt(2, jPanel2);
+        
         jPanel3 = actorProfitGraph;
-        agentDataTab.setComponentAt(4, jPanel4);
+        agentDataTab.setComponentAt(3, jPanel3);
+        
+        
         jPanel4 = priceGraph;
+        agentDataTab.setComponentAt(4, jPanel4);
+        
                 
         
   }
