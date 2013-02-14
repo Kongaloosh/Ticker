@@ -80,7 +80,7 @@ public class StockTicker {
                 actorGOOG.act(stockGOOG.getPrice(), stockGOOG.getChange());
 
             } else {
-                actorGOOG.holdPane(calendarEST.get(Calendar.HOUR_OF_DAY));
+                actorGOOG.holdPane(calendarEST.get(Calendar.HOUR_OF_DAY), "9:30");
             }
 //           Case for NIKKEI
             if (
@@ -89,6 +89,8 @@ public class StockTicker {
                 stockNIKKEI = StockTickerDAO.getInstance().getStockPrice("^N225");
                 actorNIKKEI.act(stockNIKKEI.getPrice(), stockNIKKEI.getChange());
                 
+            } else{
+                actorNIKKEI.holdPane(calendarJST.get(Calendar.HOUR_OF_DAY), "9:00");
             }
 //           Case for FTSE
             if (
@@ -96,7 +98,8 @@ public class StockTicker {
                     (calendarJST.get(Calendar.HOUR_OF_DAY) >= 8 && calendarJST.get(Calendar.HOUR_OF_DAY) <= 12)) {
                 stockFTSE = StockTickerDAO.getInstance().getStockPrice("FTSE");
                 actorFTSE.act(stockFTSE.getPrice(), stockFTSE.getChange());
-                
+            }else{
+                actorNIKKEI.holdPane(calendarGMT.get(Calendar.HOUR_OF_DAY), "8:00");
             }
         }
     }

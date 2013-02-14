@@ -178,13 +178,13 @@ public class Actor {
         }
     }
     
-    public void holdPane(int hour){
+    public void holdPane(int hour, String openingTime){
         /* Created By: Alex Kearney 
          * This holds the stock during after-hours trading so no actions occur.
          */
         JLabel holdLable = new JLabel(
                   "<html> Exchange is closed"
-                + "<br> Opening time: 9:30" 
+                + "<br> Opening time: " + openingTime 
                 + "<br> Current time EST: " + hour
                 + "</html>");
         gui.refresh(holdLable, new ChartPanel(null), new ChartPanel(null), new ChartPanel(null), new JLabel());
