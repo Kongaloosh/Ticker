@@ -67,21 +67,37 @@ public class StockTicker {
         TimeZone jst = TimeZone.getTimeZone("JST");
         Calendar calendarJST = Calendar.getInstance(jst);
 //      Timing got FTSE
+        TimeZone gmt = TimeZone.getTimeZone("GMT");
+        Calendar calendarGMT = Calendar.getInstance(gmt);
         
         while (true) {
+//            Case for NYSE
             if ((calendarEST.get(Calendar.HOUR_OF_DAY) == 9 && calendarEST.get(Calendar.MINUTE) >= 30)
                     || (calendarEST.get(Calendar.HOUR_OF_DAY) >= 10 && calendarEST.get(Calendar.HOUR_OF_DAY) < 16)) {
 //                 if the hours are between 9:30 AM and 4:00 pm, trade.
 
                 stockGOOG = StockTickerDAO.getInstance().getStockPrice("GOOG");
                 actorGOOG.act(stockGOOG.getPrice(), stockGOOG.getChange());
-                time = System.currentTimeMillis();
 
             } else {
                 actorGOOG.holdPane(calendarEST.get(Calendar.HOUR_OF_DAY));
             }
-
-
+//           Case for NIKKEI
+            if (
+                    (calendarJST.get(Calendar.HOUR_OF_DAY) == 9) ||
+                    (calendarJST.get(Calendar.HOUR_OF_DAY) >= 9 && calendarJST.get(Calendar.HOUR_OF_DAY) <= 15)) {
+                stockNIKKEI = StockTickerDAO.getInstance().getStockPrice("^N225");
+                actorNIKKEI.act(stockNIKKEI.getPrice(), stockNIKKEI.getChange());
+                
+            }
+//           Case for FTSE
+            if (
+                    (calendarJST.get(Calendar.HOUR_OF_DAY) == 8) ||
+                    (calendarJST.get(Calendar.HOUR_OF_DAY) >= 8 && calendarJST.get(Calendar.HOUR_OF_DAY) <= 12)) {
+                stockFTSE = StockTickerDAO.getInstance().getStockPrice("FTSE");
+                actorFTSE.act(stockFTSE.getPrice(), stockFTSE.getChange());
+                
+            }
         }
     }
 }
