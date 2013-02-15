@@ -40,21 +40,26 @@ import javax.swing.JLabel;
  * - pane index out of bounds bug in the while loop
  * - fixed the index out of bounds error, I hope it doesn't reccur
  * - fixed the versioning mistake.
+ * - changed the discritization of the statespace
+ * - changed the reward
+ * 
+ * 15/02/13
+ * - updated the way the the equity is determined
+ * - removed the initial (0,0) point on the graphing functions
+ * 
  */ 
 public class StockTicker {
 
     /* To-do: 
-     *  - Add nikkei and FTSE as their own exchange times
-     *  - Fix the discritization for a more optimum statespace:
-     * The states are varying by fractions of a percentage, figure out what 
-     * those fractions may be and update Actor.discritize(), such that there are
-     * more states for the smaller movements and less for the larger movements
+     * 
      *  - Fix the reward for greater control
      *  - Add an equity field that's added to the agent
      *  - update the gui with a more aesthetically put together feel:
      * This means seperation and less chunky 
      *  - Create a broker class that bets money given the stock 'Analyst's' Calls
      *  - Find a way to get investment-house analyst calls (API?)
+     * 
+     * 
      */
     public static void main(String[] args) {
         double THIRTY_MIN = 180000;

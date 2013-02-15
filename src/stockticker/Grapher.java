@@ -31,7 +31,6 @@ public class Grapher extends ApplicationFrame{
           super(title);
           
           series = new XYSeries(seriesName);
-          series.add(0,0);
           xYDataset = new XYSeriesCollection(series);
           chart = ChartFactory.createXYLineChart(
                   title,

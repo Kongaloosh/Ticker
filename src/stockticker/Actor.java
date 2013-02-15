@@ -40,6 +40,7 @@ import org.jfree.chart.ChartPanel;
  * 
  * 14/02/13
  * - pane bug in the price pane
+ * - you really need to check over the spaghetti agent's actions
  */
 public class Actor {
 //  Stock related fields:
@@ -83,7 +84,7 @@ public class Actor {
         readSpace();
 //       Sets the graphs that track agent behaviour
         rewardGraph = new Grapher("Reward", "Reward", "Time-steps", "Reward");
-        equityGraph = new Grapher("Actor Profit", "Actor Profit", "Time Steps", "Actor Profit");
+        equityGraph = new Grapher("Actor Equity", "Equity", "Time Steps", "Equity");
         priceGraph = new Grapher("Price", "Price", "Time Steps", "Price");
 //        Creates the gui to monitor data
         gui.setStartGui(new JLabel(""), equityGraph.get(), priceGraph.get(), rewardGraph.get(), new JLabel(""));
@@ -96,11 +97,21 @@ public class Actor {
  * - this could be improved as there is spaghetti left over from jerry-rigging
  * the panels into the GUI
  */        
+        
+         String tempAction = "";
+        if (getAction() == 0) {
+            tempAction = "Buy";
+        }else if (getAction() == 1){
+            tempAction = "Sell";
+        }else if (getAction() == 2){
+            tempAction = "Hold";
+        }
+        
         JLabel actorData = new JLabel(
                 "<html>Quoting: " + name
                 + "<br>Profit: " + getProfit()
                 + "<br>Time step: " + timesteps
-                + "<br>Action: " + getAction()
+                + "<br>Action: " + tempAction
                 + "<br>Previous index: " + getIndexOfBestMove()
                 + "<br>Buy in price: " + getBuyInPrice()
                 + "<br>Reward : " + getReward()
@@ -125,17 +136,22 @@ public class Actor {
          */
         if (previousPrice != price && change !=  previousChange) {
         
+//        Updating Previous step    
+            
+        timesteps++;
+        updateTD(price, change);
+        updateStateVariables();
+// writing
+        updateHoldings();
+        Graph();
+        guiManager();
+        writeStateSpace();
+//        action
         setPrice(price);
         setChange(change);
         updateStateIndex();
         updateAction();
-        updateHoldings();
-        guiManager();
-        Graph();
-        writeStateSpace();
-        timesteps++;
-        updateTD();
-        updateStateVariables();
+        
         
         }
     }
@@ -145,10 +161,18 @@ public class Actor {
      * This is a bit of redundant code from the pre-gui phase, but it's still 
      * helpful for debug.
      */    
+        String tempAction = "";
+        if (getAction() == 0) {
+            tempAction = "Buy";
+        }else if (getAction() == 1){
+            tempAction = "Sell";
+        }else if (getAction() == 2){
+            tempAction = "Hold";
+        }
         
         System.out.println(
                 " ***************" + timesteps
-                + " Action :  " + getAction()
+                + " Action :  " + tempAction
                 + "\n Price : " + getPrice()
                 + "\n Buy - in price " + getBuyInPrice()
                 + "\n profit: " + profit
@@ -200,7 +224,7 @@ public class Actor {
          * Updated the graphs with most recent information
          */
         rewardGraph.update(timesteps, getReward());
-        equityGraph.update(timesteps, equity);
+        equityGraph.update(timesteps, getEquity());
         priceGraph.update(timesteps, getPrice());
         
     }
@@ -231,14 +255,11 @@ public class Actor {
         int indexPrice;
         int indexChange;
 
-        
-
         if (change / previousChange >= 2) {
             indexChange = 20;
         } else {
             indexChange = (int) Math.round((change / previousChange) * 10);
         }
-
         setIndexOfState(discritize(price / previousPrice) + (21 * discritize((change / previousChange))));
     }
 
@@ -299,34 +320,34 @@ public class Actor {
 
         } else if (action == 1) {
             profit += getPrice();
-            equity += (getBuyInPrice() - getPrice());
+            equity += (getPrice() -getBuyInPrice());
             setBuyInPrice(0);
             setIsHolding(false);
         }
     }
 
-    public void determineReward() {
+    public void determineReward(double newPrice, double newChange) {
         /* Created By: Alex Kearney 
          * Determines the reward given the action
          */
         if (getAction() == 0) {
-            setReward(-1.0 / (getPreviousPrice() / getPrice()));
+            setReward(-1.0 / (getPrice() / newPrice));
         } else if (getAction() == 1) {
-            setReward(-1.0 / (getPrice() - getBuyInPrice()));
+            setReward(-1.0 / (newPrice - getBuyInPrice()));
         } else if (getAction() == 2) {
             if (isHolding) {
-                setReward(-1.0 / (getPreviousPrice() / getPrice()));
+                setReward(-1.0 / (getPrice()/ newPrice));
             } else {
-                setReward(-1.0 / (getPrice() / getPreviousPrice()));
+                setReward(-1.0 / (newPrice / getPrice()));
             }
         }
     }
 
-    public void updateTD() {
+    public void updateTD(double newPrice, double newChange) {
         /* Created By: Alex Kearney 
          * 
          */
-        determineReward();
+        determineReward(newPrice, newChange);
         setTemporalDifference(
                 learningRate
                 * (getReward()
